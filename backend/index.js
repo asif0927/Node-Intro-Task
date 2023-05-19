@@ -32,9 +32,21 @@ app.get('/api',(req, res) => {
 })
 
 //get
-app.get('/api/cars',(req,res)=>{
-   res.send(fakeData)
-})
+app.get('/api/cars', (req, res) => {
+    const { brandName, modelName} = req.query;
+  
+    let filteredCars = fakeData;
+  
+    if (brandName) {
+      filteredCars = filteredCars.filter(car => car.brandName.toLowerCase().includes(brandName.toLowerCase().trim()));
+    }
+  
+    if (modelName) {
+      filteredCars = filteredCars.filter(car => car.modelname.toLowerCase().includes( modelName.toLowerCase().trim()));
+    }
+  
+    res.send(filteredCars);
+  });  
 //getbyid
 app.get('/api/cars/:id',(req,res)=>{
     const id=req.params.id;
